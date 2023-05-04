@@ -1,0 +1,31 @@
+<div class="row mt-5">
+  <div class="col-md-3 mx-auto">
+    <p>*必填欄位</p>
+    <form action="/records/{{record._id}}?_method=put" method="post">
+      <div class="mt-3">
+        <label for="name" class="form-label">名稱* :</label>
+        <input type="text" name="name" id="name" class="form-control" maxlength="20" value="{{record.name}}" required>
+      </div>
+      <div class="mt-3">
+        <label for="date" class="form-label">日期* :</label>
+        <input type="date" name="date" id="date" class="form-control" value="{{record.date}}" required>
+      </div>
+      <div class="mt-3">
+        <label for="category" class="form-label">類別* :</label>
+        <select id="category" name="category" type="text" placeholder="Select" class="form-control" required>
+          <option>家居</option>
+          <option>交通</option>
+          <option>娛樂</option>
+          <option>飲食</option>
+          <option>其他</option>
+        </select>
+      </div>
+      <div class="mt-3">
+        <label for="amount" class="form-label">金額* :</label>
+        <input type="number" name="amount" id="amount" class="form-control" max="1000000" value="{{record.amount}}"
+          required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">儲存</button>
+    </form>
+  </div>
+</div>

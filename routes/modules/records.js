@@ -17,6 +17,30 @@ router.post('/', async (req, res) => {
   res.redirect('/')
 })
 
+router.get('/:id/edit', (req, res) => {
+  const id = req.params.id
+  Record.findById(id)
+    .lean()
+    .then(record => {
+      record.date = record.date.toISOString().replace(/T.*/, '')
+      console.log(record)
+      res.render('edit', { record })
+    })
+    .catch(error => console.log(error))
+})
+
+router.put('/:id', (req, res) => {
+  const id = req.params.id
+  const newdata = req.body
+  Record.findById(id)
+    .then(record => {
+      Object.assign(record, newdata)
+      return record.save()
+    })
+    .then(() => res.redirect(`/`))
+    .catch(error => console.log(error))
+})
+
 router.delete('/:id', (req, res) => {
   const id = req.params.id
   Record.findById(id)
