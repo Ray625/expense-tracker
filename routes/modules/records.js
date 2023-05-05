@@ -13,7 +13,6 @@ router.post('/', async (req, res) => {
   } catch {
     console.log(error)
   }
-  console.log('record created')
   res.redirect('/')
 })
 
@@ -23,7 +22,6 @@ router.get('/:id/edit', (req, res) => {
     .lean()
     .then(record => {
       record.date = record.date.toISOString().replace(/T.*/, '')
-      console.log(record)
       res.render('edit', { record })
     })
     .catch(error => console.log(error))
