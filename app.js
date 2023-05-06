@@ -6,7 +6,6 @@ const methodOverride = require('method-override')
 const app = express()
 
 require('./config/mongoose')
-const Record = require('./models/record')
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
