@@ -17,30 +17,52 @@
       </div>
     </div>
     <hr>
-    {{#each records}}
-    <div class="d-flex"> {{!-- expenselist --}}
-      <div class="d-flex flex-fill align-items-center px-3 pt-2">
-        <div class="me-2 p-0 rounded-circle d-flex align-items-center justify-content-center"
-          style="background-color: #eee; width:30px;height:30px">
-          <i class="{{this.categoryIcon}}"></i>
+    <div class="body">
+      {{#each records}}
+      <div class="d-flex"> {{!-- expenselist --}}
+        <div class="d-flex flex-fill align-items-center px-3 pt-2">
+          <div class="me-2 p-0 rounded-circle d-flex align-items-center justify-content-center"
+            style="background-color: #eee; width:30px;height:30px">
+            <i class="{{this.categoryIcon}}"></i>
+          </div>
+          <div class="ms-2">
+            <p class="lead mb-1 p-0" style="font-weight: 500">{{this.name}}</p>
+            <p style="font-size: x-small;color:#666">{{this.date}}</p>
+          </div>
+          <div class="ms-auto me-3">
+            {{this.amount}}元
+          </div>
+          <a class="btn btn-light my-auto" href="records/{{this._id}}/edit"><i
+              class="fa-solid fa-pen-to-square"></i></a>
+          <form action="./records/{{this._id}}?_method=delete" method="post" class="my-auto deleteForm">
+            <buttona class="btn btn-light deleteButton"><i class="fa-solid fa-trash-can deleteButton"></i></button>
+          </form>
         </div>
-        <div class="ms-2">
-          <p class="lead mb-1 p-0" style="font-weight: 500">{{this.name}}</p>
-          <p style="font-size: x-small;color:#666">{{this.date}}</p>
-        </div>
-        <div class="ms-auto me-3">
-          {{this.amount}}元
-        </div>
-        <a class="btn btn-light my-auto" href="records/{{this._id}}/edit"><i class="fa-solid fa-pen-to-square"></i></a>
-        <form action="./records/{{this._id}}?_method=delete" method="post" class="my-auto">
-          <button class="btn btn-light"><i class="fa-solid fa-trash-can"></i></button>
-        </form>
       </div>
+      <hr>
+      {{/each}}
     </div>
-    <hr>
-    {{/each}}
     <div class=" d-flex flex-fill justify-content-center">
       <a class="btn btn-primary mt-4" href="/records/new">新增支出</a>
     </div>
   </div>
 </div>
+
+{{!-- 刪除按鈕確認提示 --}}
+<script>
+  const deleteForm = document.querySelector('.deleteForm')
+  const body = document.querySelector('.body')
+
+  body.addEventListener('click', event => {
+    const target = event.target
+    if (target.classList.contains('deleteButton')) {
+      event.preventDefault() // 停止瀏覽器預設行為
+
+      const confirmed = confirm('確定要刪除嗎？')
+
+      if (confirmed) {
+        deleteForm.submit() // 提交表單
+      }
+    }
+  })
+</script>
