@@ -1,12 +1,11 @@
-const { text } = require('body-parser')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const categorySchema = new Schema({
-  id: {
-    type: Number,
+  category: {
+    type: String,
     required: true
   },
-  name: {
+  icon: {
     type: String,
     required: true
   }

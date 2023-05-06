@@ -1,50 +1,70 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
+const Category = require('../../models/category')
 
-router.get('/new', (req, res) => {
-  res.render('new')
-})
-
-router.post('/', async (req, res) => {
-  const record = req.body
+router.get('/new', async (req, res) => {
   try {
-    await Record.create(record)
+    const categories = await Category.find().lean().sort({ _id: 'asc' })
+    res.render('new', { categories })
   } catch {
     console.log(error)
   }
-  res.redirect('/')
 })
 
-router.get('/:id/edit', (req, res) => {
+router.post('/', async (req, res) => {
+  const { name, date, category, amount } = req.body
+  try {
+    const selectedCategory = await Category.find({ category }).lean()
+    const [{ _id: categoryId, icon: categoryIcon }] = selectedCategory
+    await Record.create({ name, date, categoryId, amount, categoryIcon })
+    res.redirect('/')
+  } catch {
+    console.log(error)
+  }
+})
+
+router.get('/:id/edit', async (req, res) => {
   const id = req.params.id
-  Record.findById(id)
-    .lean()
-    .then(record => {
-      record.date = record.date.toISOString().replace(/T.*/, '')
-      res.render('edit', { record })
+  try {
+    const record = await Record.findById(id).lean()
+    record.date = record.date.toISOString().replace(/T.*/, '')
+    const categories = await Category.find().lean().sort({ _id: 'asc' })
+    const categoriesList = categories.map(category => {
+      category.isSelected = category._id.toString() === record.categoryId.toString()
+      return category
     })
-    .catch(error => console.log(error))
+    res.render('edit', { record, categoriesList })
+  } catch {
+    console.log(error)
+  }
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const id = req.params.id
-  const newdata = req.body
-  Record.findById(id)
-    .then(record => {
-      Object.assign(record, newdata)
-      return record.save()
-    })
-    .then(() => res.redirect(`/`))
-    .catch(error => console.log(error))
+  const { name, date, category, amount } = req.body
+  try {
+    const selectedCategory = await Category.find({ category }).lean()
+    const categoryId = selectedCategory[0]._id
+    const newData = { name, date, categoryId, amount }
+    const record = await Record.findById(id)
+    Object.assign(record, newData)
+    await record.save()
+    res.redirect(`/`)
+  } catch {
+    console.log(error)
+  }
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const id = req.params.id
-  Record.findById(id)
-    .then(record => record.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+  try {
+    const record = await Record.findById(id)
+    await record.remove()
+    res.redirect('/')
+  } catch {
+    console.log(error)
+  }
 })
 
 module.exports = router

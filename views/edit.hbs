@@ -14,11 +14,9 @@
       <div class="mt-3">
         <label for="category" class="form-label">類別* :</label>
         <select id="category" name="category" type="text" placeholder="Select" class="form-control" required>
-          <option>家居</option>
-          <option>交通</option>
-          <option>娛樂</option>
-          <option>飲食</option>
-          <option>其他</option>
+          {{#each categoriesList}}
+          <option {{#if this.isSelected}}selected{{/if}}>{{this.category}}</option>
+          {{/each}}
         </select>
       </div>
       <div class="mt-3">
