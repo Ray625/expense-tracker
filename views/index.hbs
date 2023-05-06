@@ -2,12 +2,14 @@
   <div class="container col-md-6">
     <div class="d-flex justify-content-between align-items-center">
       <div class="col-3">
-        <select name="category" id="category" class="col-12 form-select">
-          <option>所有支出</option>
-          {{#each categories}}
-          <option>{{this.category}}</option>
-          {{/each}}
-        </select>
+        <form action="/category" method="get">
+          <select name="category" id="category" class="col-12 form-select" onchange="this.form.submit()">
+            <option value="all">所有支出</option>
+            {{#each categories}}
+            <option {{#if this.isSelected}}selected{{/if}}>{{this.category}}</option>
+            {{/each}}
+          </select>
+        </form>
       </div>
       <div class="mt-3 d-flex flex-column align-items-end col-8">
         <h6 style="font-weight: 600">總金額</h6>

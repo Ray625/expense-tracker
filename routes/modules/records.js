@@ -15,8 +15,8 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
   const { name, date, category, amount } = req.body
   try {
-    const selectedCategory = await Category.find({ category }).lean()
-    const [{ _id: categoryId, icon: categoryIcon }] = selectedCategory
+    const selectedCategory = await Category.findOne({ category }).lean()
+    const { _id: categoryId, icon: categoryIcon } = selectedCategory
     await Record.create({ name, date, categoryId, amount, categoryIcon })
     res.redirect('/')
   } catch {
@@ -42,11 +42,12 @@ router.get('/:id/edit', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id
-  const { name, date, category, amount } = req.body
+  const { name, date, category, amount, } = req.body
   try {
-    const selectedCategory = await Category.find({ category }).lean()
-    const categoryId = selectedCategory[0]._id
-    const newData = { name, date, categoryId, amount }
+    const selectedCategory = await Category.findOne({ category }).lean()
+    console.log(selectedCategory)
+    const { _id: categoryId, icon: categoryIcon } = selectedCategory
+    const newData = { name, date, categoryId, amount, categoryIcon }
     const record = await Record.findById(id)
     Object.assign(record, newData)
     await record.save()
