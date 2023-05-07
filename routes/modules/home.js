@@ -20,8 +20,8 @@ router.get('/', async (req, res) => {
       })
     });
     res.render('index', { records, totalAmount, categories })
-  } catch {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 
@@ -54,8 +54,8 @@ router.get('/category', async (req, res) => {
       })
     });
     res.render('index', { records, totalAmount, categories })
-  } catch {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 

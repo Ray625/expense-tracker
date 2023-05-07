@@ -8,21 +8,22 @@ router.get('/new', async (req, res) => {
   try {
     const categories = await Category.find().lean().sort({ _id: 'asc' })
     res.render('new', { categories })
-  } catch {
-    error => console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 
 router.post('/', async (req, res) => {
   const userId = req.user._id
   const { name, date, category, amount } = req.body
+  console.log(date)
   try {
     const selectedCategory = await Category.findOne({ category }).lean()
     const { _id: categoryId, icon: categoryIcon } = selectedCategory
     await Record.create({ name, date, amount, categoryId, categoryIcon, userId })
     res.redirect('/')
-  } catch {
-    error => console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 
@@ -38,8 +39,8 @@ router.get('/:id/edit', async (req, res) => {
       return category
     })
     res.render('edit', { record, categoriesList })
-  } catch {
-    error => console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 
@@ -55,8 +56,8 @@ router.put('/:id', async (req, res) => {
     Object.assign(record, newData)
     await record.save()
     res.redirect(`/`)
-  } catch {
-    error => console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 
@@ -67,8 +68,8 @@ router.delete('/:id', async (req, res) => {
     const record = await Record.findOne({ _id, userId })
     await record.remove()
     res.redirect('/')
-  } catch {
-    error => console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 

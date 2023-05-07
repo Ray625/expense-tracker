@@ -12,10 +12,10 @@ const categoryList = [
 db.once('open', async () => {
   try {
     await Category.create(categoryList)
-    console.log('done')
+    console.log('category created')
     process.exit()
-  } catch {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 })
 

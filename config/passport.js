@@ -20,8 +20,8 @@ module.exports = app => {
         return done(null, false, req.flash('warning_msg', 'Emaill或密碼錯誤。'))
       }
       return done(null, user)
-    } catch {
-      error => done(error, false)
+    } catch (err) {
+      done(err, false)
     }
   }))
 
@@ -47,8 +47,8 @@ module.exports = app => {
         })
         return done(null, user)
       }
-    } catch {
-      error => done(err, false)
+    } catch (err) {
+      done(err, false)
     }
   }))
   // 設定序列化與反序列化
@@ -59,8 +59,8 @@ module.exports = app => {
     try {
       const user = await User.findById(id).lean()
       done(null, user)
-    } catch {
-      error => done(error, null)
+    } catch (err) {
+      done(err, null)
     }
   })
 }
