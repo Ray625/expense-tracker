@@ -9,7 +9,7 @@ router.get('/new', async (req, res) => {
     const categories = await Category.find().lean().sort({ _id: 'asc' })
     res.render('new', { categories })
   } catch {
-    console.log(error)
+    error => console.log(error)
   }
 })
 
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     await Record.create({ name, date, categoryId, amount, categoryIcon })
     res.redirect('/')
   } catch {
-    console.log(error)
+    error => console.log(error)
   }
 })
 
@@ -37,7 +37,7 @@ router.get('/:id/edit', async (req, res) => {
     })
     res.render('edit', { record, categoriesList })
   } catch {
-    console.log(error)
+    error => console.log(error)
   }
 })
 
@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
     await record.save()
     res.redirect(`/`)
   } catch {
-    console.log(error)
+    error => console.log(error)
   }
 })
 
@@ -65,7 +65,7 @@ router.delete('/:id', async (req, res) => {
     await record.remove()
     res.redirect('/')
   } catch {
-    console.log(error)
+    error => console.log(error)
   }
 })
 
