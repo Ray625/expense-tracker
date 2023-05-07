@@ -14,6 +14,10 @@ const recordSchema = new Schema({
     type: Number,
     required: true
   },
+  createAt: {
+    type: Date,
+    default: Date.now
+  },
   categoryId: {
     type: Schema.Types.ObjectId,
     ref: 'category',
@@ -23,9 +27,11 @@ const recordSchema = new Schema({
   categoryIcon: {
     type: String
   },
-  createAt: {
-    type: Date,
-    default: Date.now
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
   }
 })
 
