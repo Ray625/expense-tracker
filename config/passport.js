@@ -9,7 +9,7 @@ module.exports = app => {
   // 設定本地登入策略
   passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
     try {
-      const user = await User.findOne({ email }).lean()
+      const user = await User.findOne({ email })
       if (!user) {
         return done(null, false, { message: 'That email is not registered.' })
       }
