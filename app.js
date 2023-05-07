@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-const port = 3000
+const port = process.env.PORT
 
 app.listen(port, () => {
   console.log(`App is running on http://localhost:${port}`)
