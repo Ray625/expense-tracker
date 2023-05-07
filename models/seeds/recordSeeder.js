@@ -22,7 +22,7 @@ const SEED_USER = [
 
 db.once('open', async () => {
   try {
-    await recordList.map(async (record, record_index) => {
+    await Promise.all(recordList.map(async (record, record_index) => {
       try {
         const categoryName = record.category
         const category = await Category.findOne({ category: categoryName }).lean()
@@ -31,7 +31,7 @@ db.once('open', async () => {
       } catch (err) {
         console.log(err)
       }
-    })
+    }))
     await Promise.all(SEED_USER.map(async (seed, seed_index) => {
       try {
         const salt = await bcrypt.genSalt(10)

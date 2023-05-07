@@ -16,7 +16,6 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
   const userId = req.user._id
   const { name, date, category, amount } = req.body
-  console.log(date)
   try {
     const selectedCategory = await Category.findOne({ category }).lean()
     const { _id: categoryId, icon: categoryIcon } = selectedCategory
