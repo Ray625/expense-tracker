@@ -1,5 +1,4 @@
-![myimage]()
-![myimage]()
+![myimage](https://github.com/Ray625/expense-tracker/blob/main/Screen.PNG?raw=true)
 ## 簡介
 簡易的記帳簿，使用者登入後，可以新增、瀏覽、編輯及刪除支出紀錄。
 ## 功能
